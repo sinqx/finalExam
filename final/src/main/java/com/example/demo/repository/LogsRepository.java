@@ -10,6 +10,8 @@ import java.util.List;
 
 @Repository
 public interface LogsRepository extends JpaRepository<Logs, Long> {
-    List<Logs> findByRecordedIsBetweenAndCitizenVaccinatedTrueOrderByCitizenRegionName(LocalDateTime startOfDay, LocalDateTime  endOfDay);
+    List<Logs> findByRecordedIsBetweenAndCitizenVaccineIsNotNullOrderByCitizenRegionName(LocalDateTime startOfDay, LocalDateTime  endOfDay);
     List<Logs> findByRecordedIsBetweenAndCitizenInfectedTrueOrderByCitizenRegionName(LocalDateTime startOfDay, LocalDateTime  endOfDay);
+    Integer countAllByCitizenRegionIdAndCitizenVaccineIsNotNull(Long id);
+    Integer countAllByCitizenRegionIdAndCitizenInfectedTrue(Long id);
 }

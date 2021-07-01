@@ -27,4 +27,7 @@ public class LogsController {
 
     @PostMapping("/new/vaccine/{citizenId}")
     public Logs createNewInfectedPost(@PathVariable Long citizenId){return logsService.createNewInfectedPost(citizenId);}
+
+    @GetMapping
+    public List<String> getStatistics(){return logsService.showTheStatistic();}
 }

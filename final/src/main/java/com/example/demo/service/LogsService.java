@@ -12,5 +12,5 @@ public interface LogsService {
     List<Logs> getAllInfectedCitizens(LocalDateTime date);
     Logs createNewVaccinatedPost(VaccineModel vaccineModel);
     Logs createNewInfectedPost(Long citizenId);
-    String showTheStatistic();
+    List<String> showTheStatistic();
 }
