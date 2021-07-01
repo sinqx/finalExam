@@ -24,5 +24,9 @@ public class LogsController {
     @GetMapping("/infected")
     public List<Logs> getAllInfectedCitizens(@RequestBody LocalDateTime date){return logsService.getAllInfectedCitizens(date);}
 
-    PostMapping()
+    @PostMapping("/new/vaccine/{citizenId}")
+    public Logs createNewVaccinatedPost(@PathVariable Long citizenId){return logsService.createNewVaccinatedPost(citizenId);}
+
+    @PostMapping("/new/vaccine/{citizenId}")
+    public Logs createNewInfectedPost(@PathVariable Long citizenId){return logsService.createNewInfectedPost(citizenId);}
 }

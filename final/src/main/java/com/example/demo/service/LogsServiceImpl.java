@@ -1,21 +1,24 @@
 package com.example.demo.service;
 
+import com.example.demo.entity.Citizen;
 import com.example.demo.entity.Logs;
+import com.example.demo.entity.Vaccine;
 import com.example.demo.repository.LogsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.Instant;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Locale;
+
 
 @Service
 public class LogsServiceImpl implements LogsService{
     @Autowired
     private LogsRepository logsRepository;
+
+    @Autowired
+    private CitizenService citizenService;
 
     @Override
     public List<Logs> getAllVaccinatedCitizens(LocalDateTime startDate) {
@@ -30,7 +33,29 @@ public class LogsServiceImpl implements LogsService{
     }
 
     @Override
-    public Logs save(Logs log) {
-        return null;
+    public Logs createNewVaccinatedPost(Long citizenId) {
+        Citizen citizen =citizenService.findById(citizenId);
+        Logs log = Logs.builder()
+                .citizen(citizen)
+                .recorded(LocalDateTime.now())
+                .status("vaccinated by")
+                .build();
+        citizen.setVaccinated(true);
+        citizenService.save(citizen);
+        return logsRepository.save(log);
     }
+
+    @Override
+    public Logs createNewInfectedPost(Long citizenId) {
+        Citizen citizen =citizenService.findById(citizenId);
+        Logs log = Logs.builder()
+                .citizen(citizen)
+                .recorded(LocalDateTime.now())
+                .status("infected")
+                .build();
+        citizen.setInfected(true);
+        citizenService.save(citizen);
+        return logsRepository.save(log);
+    }
+
 }

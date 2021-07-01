@@ -4,4 +4,5 @@ import com.example.demo.entity.Citizen;
 
 public interface CitizenService {
     Citizen save(Citizen citizen);
+    Citizen findById(Long id);
 }
