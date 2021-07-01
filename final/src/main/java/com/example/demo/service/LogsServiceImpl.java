@@ -26,7 +26,7 @@ public class LogsServiceImpl implements LogsService{
     @Override
     public List<Logs> getAllVaccinatedCitizens(LocalDateTime startDate) {
         LocalDateTime endOfDay = startDate.plusDays(1);
-        return logsRepository.findByRecordedIsBetweenAndCitizenVaccinatedTrueOrderByCitizenRegionName(startDate, endOfDay);
+        return logsRepository.findByRecordedIsBetweenAndCitizenVaccineIsNotNullOrderByCitizenRegionName(startDate, endOfDay);
     }
 
     @Override
