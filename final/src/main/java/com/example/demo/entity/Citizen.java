@@ -21,8 +21,9 @@ public class Citizen {
     @Column(name = "full_name", nullable = false)
     private String fullName;
 
-    @Column(name = "vaccinated")
-    private Boolean vaccinated;
+    @OneToOne
+    @JoinColumn(name = "vaccine")
+    private Vaccine Vaccine;
 
     @Column(name = "infected")
     private Boolean infected;

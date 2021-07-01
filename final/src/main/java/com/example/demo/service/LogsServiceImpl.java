@@ -3,6 +3,7 @@ package com.example.demo.service;
 import com.example.demo.entity.Citizen;
 import com.example.demo.entity.Logs;
 import com.example.demo.entity.Vaccine;
+import com.example.demo.model.VaccineModel;
 import com.example.demo.repository.LogsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,8 @@ public class LogsServiceImpl implements LogsService{
     @Autowired
     private CitizenService citizenService;
 
+    @Autowired
+    private VaccineService vaccineService;
     @Override
     public List<Logs> getAllVaccinatedCitizens(LocalDateTime startDate) {
         LocalDateTime endOfDay = startDate.plusDays(1);
@@ -33,14 +36,15 @@ public class LogsServiceImpl implements LogsService{
     }
 
     @Override
-    public Logs createNewVaccinatedPost(Long citizenId) {
-        Citizen citizen =citizenService.findById(citizenId);
+    public Logs createNewVaccinatedPost(VaccineModel vaccineModel) {
+        Citizen citizen =citizenService.findById(vaccineModel.getCitizenId());
+        Vaccine vaccine = vaccineService.findById(vaccineModel.getVaccineId());
         Logs log = Logs.builder()
                 .citizen(citizen)
                 .recorded(LocalDateTime.now())
                 .status("vaccinated by")
                 .build();
-        citizen.setVaccinated(true);
+        citizen.setVaccine(vaccine);
         citizenService.save(citizen);
         return logsRepository.save(log);
     }
@@ -57,5 +61,11 @@ public class LogsServiceImpl implements LogsService{
         citizenService.save(citizen);
         return logsRepository.save(log);
     }
+
+    @Override
+    public String showTheStatistic() {
+        return null;
+    }
+
 
 }
